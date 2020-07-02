@@ -1,25 +1,21 @@
-function Parent(name,friends) {
-    this.name = name
-    this.friends = friends
+function inheritPrototype(subType,superType){
+    var prototype=Object.create(superType.prototype)
+    prototype.constructor=subType
+    subType.prototype=prototype
+}
+function SuperType(name){
+   this.name=name
+   this.colors=["red","blue","green"]
+}
+SuperType.prototype.sayName=function(){
+   console.log(this.name)
 }
 
-Parent.prototype = {
-    constructor:Parent,
-    share:[1,2,3],
-    log:function () {
-        return this.name
-    }
+function SubType(name,age){
+    SuperType.call(this,name)
+    this.age=age
 }
-
-function Child(name,friends,gender) {
-    Parent.call(this, name, friends) // ⚡ 这里只需要调用一次 Parent
-    this.gender = gender
+inheritPrototype(SubType,SuperType)
+SubType.prototype.sayAge=function(){
+     console.log(this.age)
 }
-let F = function () {
-
-}
-
-F.prototype = Parent.prototype
-
-Child.prototype = new F()
-Child.prototype.constructor = Child
