@@ -57,7 +57,19 @@ class Subject {
     notify(context) {
         const count = this.observers.count();
         for (let i = 0;i<count;++i) {
+            this.observers.get(i).update(context);
         }
 
     }
 }
+
+
+const observer = new Observer(newVal => {
+    console.log(`最新值${newVal}`);
+});
+
+const subject = new Subject();
+
+subject.addObserver(observer);
+
+subject.notify("hello world");
